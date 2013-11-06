@@ -2,6 +2,7 @@ require "rubygems"
 require 'rake'
 require 'yaml'
 require 'time'
+require 'Hz2py'
 
 SOURCE = "."
 CONFIG = {
@@ -47,12 +48,19 @@ task :post do
   title = ENV["title"] || "new-post"
   tags = ENV["tags"] || "[]"
   category = ENV["category"] || ""
+  # 
+  slug = Hz2py.do(title, :join_with => '-', :to_simplified => true)
   slug = title.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
   begin
     date = (ENV['date'] ? Time.parse(ENV['date']) : Time.now).strftime('%Y-%m-%d')
   rescue => e
     puts "Error - date format must be YYYY-MM-DD, please check you typed it correctly!"
     exit -1
+  end
+  # if category directory is not exist,then create it
+  filename = File.join(CONFIG['posts'], category)
+  if !File.directory?(filename)
+    mkdir_p filename
   end
   filename = File.join(CONFIG['posts'], "#{date}-#{slug}.#{CONFIG['post_ext']}")
   if File.exist?(filename)

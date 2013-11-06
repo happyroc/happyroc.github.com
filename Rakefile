@@ -2,7 +2,7 @@ require "rubygems"
 require 'rake'
 require 'yaml'
 require 'time'
-require 'Hz2py'
+require 'hz2py'
 
 SOURCE = "."
 CONFIG = {
@@ -48,9 +48,9 @@ task :post do
   title = ENV["title"] || "new-post"
   tags = ENV["tags"] || "[]"
   category = ENV["category"] || ""
-  # 
-  slug = Hz2py.do(title, :join_with => '-', :to_simplified => true)
-  slug = title.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
+
+  slug = Hz2py.do(title.encode('utf-8'), :join_with => '-', :to_simplified => true)
+  slug = slug.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
   begin
     date = (ENV['date'] ? Time.parse(ENV['date']) : Time.now).strftime('%Y-%m-%d')
   rescue => e

@@ -135,7 +135,13 @@ $ git push origin master
 
 为了更方便的在我们本地预览博客展示效果，我们需要在本地安装jekyll，由于它是用ruby来写成的，因此我们还需要安装ruby环境。下载rubyinstaller并安装，我本地安装的是rubyinstaller-1.9.3-p194版本。安装完成后需要配置环境变量，方便使用。
 
-安装完ruby后，jekyll的安装就十分简单了，首先将gem的源更换为淘宝的源，否则会安装失败（因为墙的原因，某些组件会访问网络失败）。
+然后需要安装[Devkit](http://rubyinstaller.org/add-ons/devkit/)，Devkit是windows平台下编译和使用本地C/C++扩展包的工具，它是用来模拟Linux平台下的make,gcc,sh来进行编译。将下载下来的安装包解压到某个目录下，然后执行
+<pre><code class="shell">
+$ ruby dk.rb init
+$ ruby dk.rb install
+</code></pre>
+
+在安装完ruby和Devkit后，jekyll的安装就十分简单了，首先将gem的源更换为淘宝的源，否则会安装失败（因为墙的原因，某些组件会访问网络失败）。
 <pre><code class="shell">
 $ gem sources --remove https://rubygems.org/ 
 $ gem sources -a http://ruby.taobao.org/
@@ -146,7 +152,13 @@ $ gem sources -a http://ruby.taobao.org/
 $ gem install jekyll
 </code></pre>
 
-等待片刻即可安装成功。安装完成后，我们在git bash中cd到刚才创建的USERNAME.github.com目录中，然后执行
+等待片刻即可安装成功。安装成功后，执行
+<pre><code class="shell">
+$ jekyll -version
+</code></pre>
+来查看当前安装的jekyll版本。
+
+安装完成后，我们在git bash中cd到刚才创建的USERNAME.github.com目录中，然后执行
 <pre><code class="shell">
 $ jekyll server
 </code></pre>
@@ -169,6 +181,8 @@ $ rake theme:install git="https://github.com/jekyllbootstrap/theme-twitter.git"
 $ rake post title="Hello World"
 </code></pre>
 然后就会在_posts目录下面生成一个md格式的文件，使用markdown语言书写博客内容即可。默认的文件名为：日期-标题.md。
+
+由于我们是用markdown来书写内容的，免不了要使用一款markdown编辑器来进行编辑，我曾经使用过MarkdownPad,觉得挺好用的，但是由于最近在学习使用Sublime，在网上搜索了一下，发现可以用它在加上markdown插件来进行markdown编辑以及浏览器端查看，我目前使用的插件是[Markdown-preview](https://github.com/revolunet/sublimetext-markdown-preview)
 
 ### 二.给博客添加评论模块
 目前最流行的评论插件是disqus，我们需要去官网注册一个账号。我们可以在disqus的管理页面上进行一些个性化设置，可以修改默认的语言，颜色，排序方式等。
@@ -194,6 +208,6 @@ jekyllbootstrap本身已经提供了disqus支持，修改_config.yml文件，找
       colorscheme: light
 </code></pre>
 
-provider选项指定了默认的评论插件，我们使用的是disqus，下面的disqus中的short_name为你注册的用户名。
+provider选项指定了默认的评论插件，我们使用的是disqus，上面的disqus中的short_name为你注册的用户名。
 
 未完待遇……
